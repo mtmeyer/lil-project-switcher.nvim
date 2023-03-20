@@ -1,5 +1,13 @@
 local pickers = require("telescope.pickers")
 local finders = require("telescope.finders")
+local utils = require "telescope._extensions.utils"
+
+local options = {}
+
+local default_options = {
+    directory = '~',
+    maxdepth = 1,
+}
 
 
 local scandir = function(directory, maxdepth)
@@ -18,18 +26,19 @@ end
 
 local run = function(opts)
     opts = opts or {}
-    opts.maxdepth = opts.maxdepth or 1
-    opts.directory = opts.directory or '~'
 
     local picker = pickers.new(opts, {
         prompt_title = "Project switcher",
-        finder = finders.new_table({ results = scandir(opts.directory, opts.maxdepth)})
+        finder = finders.new_table({ results = scandir(options.directory, options.maxdepth)})
     })
 
     return picker:find()
 end
 
 return require("telescope").register_extension({
+    setup = function(ext_config, _)
+        options = utils.assign({}, default_options, ext_config)
+    end,
     exports = {
         lil_project_switcher = run
     }
