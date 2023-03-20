@@ -3,8 +3,8 @@ local finders = require("telescope.finders")
 local conf = require("telescope.config").values
 
 local get_directory_name = function(directory, filename)
-    local home_dir = vim.fn.expand(directory)
-    return filename:gsub(home_dir .. '/', '')
+	local home_dir = vim.fn.expand(directory)
+	return filename:gsub(home_dir .. "/", "")
 end
 
 local scandir = function(directory, maxdepth)
@@ -13,7 +13,7 @@ local scandir = function(directory, maxdepth)
 	local pfile = popen("find " .. directory .. " -maxdepth " .. maxdepth .. " -type d")
 	for filename in pfile:lines() do
 		i = i + 1
-		dirs[i] = {filename, get_directory_name(directory, filename)}
+		dirs[i] = { filename, get_directory_name(directory, filename) }
 	end
 
 	return dirs
@@ -25,16 +25,16 @@ local run = function(opts)
 	local maxdepth = conf.maxdepth or 1
 	local picker = pickers.new(opts, {
 		prompt_title = "Project switcher",
-		finder = finders.new_table({ 
-            results = scandir(directory, maxdepth),
-            entry_maker = function(entry)
-                return {
-                    value = entry,
-                    display = entry[1],
-                    ordinal = entry[1]
-                }
-            end
-        }),
+		finder = finders.new_table({
+			results = scandir(directory, maxdepth),
+			entry_maker = function(entry)
+				return {
+					value = entry[1],
+					display = entry[2],
+					ordinal = entry[2],
+				}
+			end,
+		}),
 	})
 
 	return picker:find()
