@@ -6,13 +6,15 @@ local test = {
     "def",
 }
 
+local directories = vim.split(vim.fn.glob('~/Documents/git/'), '\n')
+
 local run = function(opts)
     opts = opts or {}
     opts.cwd = "~/Documents/git"
 
     local picker = pickers.new(opts, {
         prompt_title = "Project switcher",
-        finder = finders.new_table({ results = test})
+        finder = finders.new_table({ results = directories})
     })
 
     return picker:find()
