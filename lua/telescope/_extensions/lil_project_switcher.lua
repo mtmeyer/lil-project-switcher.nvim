@@ -1,11 +1,17 @@
 local pickers = require("telescope.pickers")
 local finders = require("telescope.finders")
 
-local directories = vim.split(vim.fn.glob('~/Documents/git/personal/**/*'), '\n')
+
+local scandir = function (directory)
+    local popen = io.popen
+    local raw_files = popen('find' .. directory .. ' -maxdepth 1 -type d ')
+    return vim.split(raw_files, '\n')
+end
+
+local directories = scandir('~/Documents/git')
 
 local run = function(opts)
     opts = opts or {}
-    opts.cwd = "~/Documents/git"
 
     local picker = pickers.new(opts, {
         prompt_title = "Project switcher",
