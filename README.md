@@ -20,7 +20,12 @@ require('telescope').setup {
     extensions = {
         -- Existing extension configuration.......
         lil_project_switcher = {
-            directory = "~/SomeAwesomeDirectory", -- Not required, will use your $HOME directory by default
+            directories = { -- Not required, will use your $HOME directory by default
+                {
+                    directory = "~/SomeAwesomeDirectory",
+                    name = 'Awesome projects'
+                }
+            },
             maxdepth = 2 -- Not required, how many directory levels deep do you want the extension to look for
         }
     }
@@ -42,5 +47,7 @@ vim.api.nvim_set_keymap("n", "<leader>ps", ":Telescope file_browser")
 
 ## Todo
 
+- Fix multi directory searching issue
+- Fix no config directory default
 - Have multiple root directories so you could have different remaps for different types of projects (e.g. work vs personal projects)
 - Better formatting and display of results within Telescope
