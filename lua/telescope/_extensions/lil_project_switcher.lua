@@ -1,5 +1,4 @@
 local pickers = require("telescope.pickers")
-local register_extension = require("telescope.register_extension")
 
 local run = function(opts)
     opts = opts or {}
@@ -12,7 +11,7 @@ local run = function(opts)
     return picker:find()
 end
 
-return register_extension({
+return require("telescope").register_extension({
     exports = {
         lil_project_switcher = run
     }
