@@ -2,20 +2,20 @@ local pickers = require("telescope.pickers")
 local finders = require("telescope.finders")
 
 
-local scandir = function (directory)
+local scandir = function(directory)
     local popen = io.popen
-    local raw_files = popen('find' .. directory .. ' -maxdepth 1 -type d ')
+    local command = "find" .. directory ..  "-maxdepth 1 -type d"
+    local raw_files = popen(command)
     return vim.split(raw_files, '\n')
 end
 
-local directories = scandir('~/Documents/git')
 
 local run = function(opts)
     opts = opts or {}
 
     local picker = pickers.new(opts, {
         prompt_title = "Project switcher",
-        finder = finders.new_table({ results = directories})
+        finder = finders.new_table({ results = scandir('~/Documents/git')})
     })
 
     return picker:find()
