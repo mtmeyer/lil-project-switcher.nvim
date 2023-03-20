@@ -1,12 +1,7 @@
 local pickers = require("telescope.pickers")
 local finders = require("telescope.finders")
 
-local test = {
-    "abc",
-    "def",
-}
-
-local directories = vim.split(vim.fn.glob('~/Documents/git/'), '\n')
+local directories = vim.split(vim.fn.glob('~/Documents/git/personal/**/*'), '\n')
 
 local run = function(opts)
     opts = opts or {}
