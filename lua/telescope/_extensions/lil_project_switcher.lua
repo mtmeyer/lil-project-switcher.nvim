@@ -4,9 +4,14 @@ local finders = require("telescope.finders")
 
 local scandir = function(directory)
     local popen = io.popen
-    local command = "find" .. directory ..  "-maxdepth 1 -type d"
-    local raw_files = popen(command)
-    return vim.split(raw_files, '\n')
+    local i, dirs = 0, {}
+    local pfile = popen( "find" .. directory ..  "-maxdepth 1 -type d")
+    for filename in pfile:lines() do
+        i = i + 1
+        dirs[i] = filename
+    end
+
+    return vim.split(dirs, '\n')
 end
 
 
