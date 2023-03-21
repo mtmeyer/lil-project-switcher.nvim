@@ -13,7 +13,7 @@ local scandir = function(directory, maxdepth, name)
 	local pfile = popen("find " .. directory .. " -maxdepth " .. maxdepth .. " -type d")
 	for filename in pfile:lines() do
 		i = i + 1
-		local tmp_object = { value = filename, display = name .. ": " .. get_directory_name(directory, filename) }
+		local tmp_object = { filename, name .. ": " .. get_directory_name(directory, filename) }
 		dirs[i] = tmp_object
 	end
 
@@ -42,12 +42,13 @@ local run = function(opts)
 			results = results,
 			entry_maker = function(entry)
 				return {
-					value = entry.value,
-					display = entry.display,
-					ordinal = entry.display,
+					value = entry[1],
+					display = entry[2],
+					ordinal = entry[2],
 				}
 			end,
 		}),
+        sorter = conf.generic_sorter({})
 	})
 
 	return picker:find()

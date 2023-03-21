@@ -9,7 +9,7 @@ With [packer.nvim](https://github.com/wbthomason/packer.nvim):
 Note: Make sure you have [Telescope](https://github.com/nvim-telescope/telescope.nvim) installed
 
 ```lua
-use {"mtmeyer/lil-project-switcher.nvim"}
+use "mtmeyer/lil-project-switcher.nvim"
 ```
 
 ## Setup and configuration
